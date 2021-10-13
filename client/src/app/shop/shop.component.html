@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container my-3">
   <div class="row">
-    <section class="col-3">
+    <section class="col-3" *ngIf="brands && types">
       <h5 class="text-warning ml-3">Sort</h5>
       <select class="custom-select mb-3" (change)="onSortSelected($event.target.value)">
         <option *ngFor="let sort of sortOptions" [value]="sort.value">
@@ -22,7 +22,6 @@
           [value]="type.id" (click)="onTypeSelected(type.id)">
           {{type.name}}
         </li>
-
       </ul>
     </section>
 
@@ -36,7 +35,7 @@
         >
         </app-paging-header>
 
-        <div class="div form-inline mt-2">
+        <div class="div form-inline mt-2" *ngIf="products">
           <input (keyup.enter)="onSearch()" type="text" #search class="form-control mr-2" style="width: 300px;" placeholder="Search">
           <button (click)="onSearch()" class="btn btn-outline-primary my-2">Search</button>
           <button (click)="onReset()" class="btn btn-outline-success ml-2 my-2">Reset</button>

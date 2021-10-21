@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackExchange.Redis;
 
 namespace API
 {
@@ -24,12 +25,19 @@ namespace API
         {
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddDbContext<StoreContext>(options => 
-            options.UseSqlite(Configuration.GetConnectionString("Default")));
+                options.UseSqlite(Configuration.GetConnectionString("Default")));
             
+            services.AddSingleton<IConnectionMultiplexer>(c => {
+                var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"),
+                    true);
+                return ConnectionMultiplexer.Connect(configuration);
+            });
+
             services.AddControllers();
 
             services.AddApplicationServices();
             services.AddSwaggerDocumentation(); 
+            
             services.AddCors(opt => {
                 opt.AddPolicy("CorsPolicy", policy => {
                     policy.AllowAnyHeader()

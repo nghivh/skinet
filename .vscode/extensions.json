@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "johnpapa.angular-essentials"
+        "johnpapa.angular-essentials",
+        "johnpapa.angular2"
     ]
 }

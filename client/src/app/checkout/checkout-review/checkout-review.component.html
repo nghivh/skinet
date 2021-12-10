@@ -1,5 +1,9 @@
 <div class="mt-4">
-  <app-basket-summary [isBasket]=false></app-basket-summary>
+  <app-basket-summary
+    [items]="(basket$ | async).items"
+    [isBasket]=false
+  >
+  </app-basket-summary>
 </div>
 
 <div class="d-flex justify-content-between">
